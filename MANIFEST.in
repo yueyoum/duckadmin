@@ -1,0 +1,5 @@
+include LICENSE
+include MANIFEST.in
+recursive-include example *
+recursive-exclude * *.pyc
+exclude example db.sqlite3
