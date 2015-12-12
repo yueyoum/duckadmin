@@ -1,5 +1,7 @@
 include LICENSE
 include MANIFEST.in
+include README.txt
+include README.md
 recursive-include example *
 recursive-exclude * *.pyc
-exclude example db.sqlite3
+exclude example/db.sqlite3

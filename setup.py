@@ -1,8 +1,6 @@
-from distutils.core import setup
+from setuptools import find_packages, setup
 
-packages = [
-    'duckadmin',
-]
+packages = find_packages(exclude=['example'])
 
 setup(
     name='duckadmin',

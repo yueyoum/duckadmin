@@ -25,7 +25,7 @@ pip install duckadmin
 2.  define your form. (you can place it in `forms.py`, `models.py`, anything you like)
 
     Example:
-    ```
+    ```python
     from duckadmin import DuckForm
     
     class MyRedisForm(DuckForm):
@@ -79,11 +79,9 @@ pip install duckadmin
 
 3.  define admin. (in file `admin.py`)
 
-    ```
+    ```python
     from django.contrib import admin
-
     from duckadmin import DuckAdmin
-    
     from redisapp.forms import MyRedisForm
     
     @admin.register(MyRedisForm)
