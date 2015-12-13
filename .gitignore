@@ -2,6 +2,7 @@
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
 
+*.swp
 *.sqlite3
 MANIFEST
 

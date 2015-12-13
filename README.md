@@ -24,10 +24,11 @@ pip install duckadmin
 1.  add `'duckadmin'` in `INSTALLED_APPS`
 2.  define your form. (you can place it in `forms.py`, `models.py`, anything you like)
 
-    Example:
+    Demonstration ( more details see [example](/example) )
     ```python
     from duckadmin import DuckForm
     
+    # We define form (not model)
     class MyRedisForm(DuckForm):
         app_label = 'redisapp'              # your app name
         model_name = 'Person'               # link url 
@@ -39,6 +40,7 @@ pip install duckadmin
             (2, 'female'),
         )
     
+        # fields defined below will show in admin site
         id = forms.IntegerField()
         name = forms.CharField(max_length=32)
         gender = forms.ChoiceField(choices=GENDER)
@@ -47,34 +49,18 @@ pip install duckadmin
         @classmethod
         def get_data(cls):
             # get all data to display in change list page
-            ids = redis_client.lrange('person_ids', 0, -1)
-            with redis_client.pipeline() as pipe:
-                for i in ids:
-                    pipe.hgetall('person:{0}'.format(i))
-    
-                data = pipe.execute()
-                return data
     
         @classmethod
         def get_data_by_pk(cls, pk):
             # change form view
-            data = redis_client.hgetall('person:{0}'.format(pk))
-            if not data:
-                raise cls.DoesNotExist()
-            return data
     
         @classmethod
         def create_data(cls, data):
-            # when create new data
-            pk = data['id']
-            redis_client.rpush('person_ids', pk)
-            redis_client.hmset('person:{0}'.format(pk), data)
+            # create new data
     
         @classmethod
         def update_data(cls, data):
-            # when update an exist data
-            pk = data['id']
-            redis_client.hmset('person:{0}'.format(pk), data)
+            # update an exist data
     ```
 
 3.  define admin. (in file `admin.py`)
@@ -91,3 +77,15 @@ pip install duckadmin
     ```
 
 After this settings. you will see `Person` in admin site.
+
+![admin](/images/admin.png)
+
+And the change list page
+
+[!change_list](/images/change_list.png)
+
+You can add, modify record
+
+[!change_form](/images/change_form.png)
+
+
