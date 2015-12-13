@@ -22,9 +22,9 @@ pip install duckadmin
 ## Usage
 
 1.  add `'duckadmin'` in `INSTALLED_APPS`
-2.  define your form. (you can place it in `forms.py`, `models.py`, anything you like)
+2.  define your form. (you can place it in `forms.py`, `models.py`, anywhere you like)
 
-    Demonstration ( more details see [example](/example) )
+    Demonstration ( more details see [example](/example/redisapp/forms.py) )
     ```python
     from duckadmin import DuckForm
     
@@ -82,10 +82,10 @@ After this settings. you will see `Person` in admin site.
 
 And the change list page
 
-[!change_list](/images/change_list.png)
+![change_list](/images/change_list.png)
 
 You can add, modify record
 
-[!change_form](/images/change_form.png)
+![change_form](/images/change_form.png)
 
 
