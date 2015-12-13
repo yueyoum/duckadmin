@@ -14,5 +14,6 @@ setup(
     packages=packages,
     package_data = {
         'duckadmin': ['templates/*.html']
-    }
+    },
+    install_requires = ['six']
 )

@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
 
 root_path = os.path.normpath(os.path.join(BASE_DIR, '..'))
-sys.path.append(root_path)
+sys.path.insert(0, root_path)
 
 
 # Quick-start development settings - unsuitable for production

@@ -11,6 +11,8 @@ from django import forms
 from django.forms.forms import DeclarativeFieldsMetaclass
 from django.contrib.admin.helpers import AdminForm
 
+import six
+
 
 class DuckManager(object):
     def get_queryset(self):
@@ -66,9 +68,7 @@ class DuckCombinedMetaclass(DeclarativeFieldsMetaclass, DuckMetaclass):
     pass
 
 
-class DuckForm(forms.Form):
-    __metaclass__ = DuckCombinedMetaclass
-
+class DuckForm(six.with_metaclass(DuckCombinedMetaclass, forms.Form)):
     class DoesNotExist(Exception):
         pass
 

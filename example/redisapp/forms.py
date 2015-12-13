@@ -12,7 +12,7 @@ from duckadmin import DuckForm
 
 from redis import StrictRedis
 
-redis_client = StrictRedis()
+redis_client = StrictRedis(decode_responses=True)
 
 class MyRedisForm(DuckForm):
     app_label = 'redisapp'
