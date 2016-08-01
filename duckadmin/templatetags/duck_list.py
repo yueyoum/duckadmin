@@ -7,11 +7,11 @@ Description:
 
 """
 
-
 from django import template
 from django.utils.html import format_html, mark_safe
 
 register = template.Library()
+
 
 class Header(object):
     def __init__(self, name):
@@ -75,7 +75,7 @@ class Results(object):
 def duck_result_list(cl):
     results = Results(cl.model)
 
-    for data in cl.model.get_data():
+    for data in cl.result_list:
         results.add_row(data)
 
     return {

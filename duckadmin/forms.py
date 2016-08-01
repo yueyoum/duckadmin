@@ -14,9 +14,34 @@ from django.contrib.admin.helpers import AdminForm
 import six
 
 
+class DuckQuerySet(object):
+    def __init__(self, duck_from, request):
+        self.duck_from = duck_from
+        self.request = request
+
+    def count(self):
+        return self.duck_from.get_count(self.request)
+
+    def _clone(self):
+        return self.duck_from.get_data(self.request)
+
+    def __len__(self):
+        return self.count()
+
+    def __getitem__(self, item):
+        if isinstance(item, int):
+            return None
+
+        if isinstance(item, slice):
+            return self.duck_from.get_data(self.request, item.start, item.stop)
+
+
 class DuckManager(object):
-    def get_queryset(self):
-        return None
+    def __init__(self, duck_form):
+        self.duck_from = duck_form
+
+    def get_queryset(self, request):
+        return DuckQuerySet(self.duck_from, request)
 
 
 class DuckMeta(object):
@@ -76,17 +101,29 @@ class DuckForm(six.with_metaclass(DuckCombinedMetaclass, forms.Form)):
     model_name = None  # link url
     verbose_name = None  # name displayed in admin site
     object_name = None
-    pk_name = None # pk name
+    pk_name = None  # pk name
 
     _deferred = False
-    _default_manager = DuckManager()
+    _default_manager = None
+
+    @classmethod
+    def _prepare(cls):
+        if not cls._default_manager:
+            cls._default_manager = DuckManager(cls)
 
     def as_adminform(self):
         fieldsets = [(None, {'fields': self.fields.keys()})]
         return AdminForm(self, fieldsets, {})
 
     @classmethod
-    def get_data(cls):
+    def get_count(cls, request):
+        """
+        Get Total Count of dataset
+        """
+        raise NotImplementedError()
+
+    @classmethod
+    def get_data(cls, request, start=None, stop=None):
         """
         Data for the admin site to display.
         Data is a list, contains dict. dict keys are fields defined in form
@@ -94,14 +131,14 @@ class DuckForm(six.with_metaclass(DuckCombinedMetaclass, forms.Form)):
         raise NotImplementedError()
 
     @classmethod
-    def get_data_by_pk(cls, pk):
+    def get_data_by_pk(cls, request, pk):
         """
         Get Data by pk
         """
         raise NotImplementedError()
 
     @classmethod
-    def create_data(cls, data):
+    def create_data(cls, request, data):
         """
         Create new data.
         parameter data is a dict, keys are defined in form
@@ -109,7 +146,7 @@ class DuckForm(six.with_metaclass(DuckCombinedMetaclass, forms.Form)):
         raise NotImplementedError()
 
     @classmethod
-    def update_data(cls, data):
+    def update_data(cls, request, data):
         """
         Update data.
         parameter data is a dict, keys are defined in form

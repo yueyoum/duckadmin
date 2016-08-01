@@ -4,7 +4,7 @@ packages = find_packages(exclude=['example', 'example.*'])
 
 setup(
     name='duckadmin',
-    version='0.1.2',
+    version='0.2.0',
     license='BSD',
     discription='A Django reusable app for show and operate custom forms in admin.',
     author='Wang Chao',
