@@ -45,21 +45,31 @@ pip install duckadmin
         name = forms.CharField(max_length=32)
         gender = forms.ChoiceField(choices=GENDER)
         age = forms.IntegerField()
+
+        # you should implement the api below:
+        # `request` is django request instance
+
+        @classmethod
+        def get_count(cls, request):
+            # get count of datasets
+            # return integer
     
         @classmethod
-        def get_data(cls):
+        def get_data(cls, request, start, stop):
             # get all data to display in change list page
+            # return list of data.
+            # data is dict format, key is fields defined above
     
         @classmethod
-        def get_data_by_pk(cls, pk):
+        def get_data_by_pk(cls, request, pk):
             # change form view
     
         @classmethod
-        def create_data(cls, data):
+        def create_data(cls, request, data):
             # create new data
     
         @classmethod
-        def update_data(cls, data):
+        def update_data(cls, request, data):
             # update an exist data
     ```
 
